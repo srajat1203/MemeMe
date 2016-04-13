@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -31,15 +31,21 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bottom" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y27-9z-x91" userLabel="bottom">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bottom" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y27-9z-x91" userLabel="bottom">
                                 <rect key="frame" x="95" y="514" width="410" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="RJE-4G-MPd"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="top" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BLF-rO-xsN" userLabel="top">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="top" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BLF-rO-xsN" userLabel="top">
                                 <rect key="frame" x="95" y="59" width="410" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="rGa-Ld-XAW"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
@@ -47,22 +53,22 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <barButtonItem title="Album" width="67" id="qDU-wQ-5BY">
+                                    <barButtonItem tag="1" title="Album" width="67" id="qDU-wQ-5BY">
                                         <connections>
-                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="GWZ-jZ-Ytp"/>
+                                            <action selector="pickAnImage:" destination="BYZ-38-t0r" id="Xvm-Z8-xw1"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Camera" width="76" id="Oh0-3A-YEL">
+                                    <barButtonItem tag="2" systemItem="camera" id="Oh0-3A-YEL">
                                         <connections>
-                                            <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="j5q-au-8bk"/>
+                                            <action selector="pickAnImage:" destination="BYZ-38-t0r" id="nvf-s3-zBP"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faA-c0-etJ">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="faA-c0-etJ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Share" id="cWN-AI-cNg">
+                                    <barButtonItem systemItem="action" id="cWN-AI-cNg">
                                         <connections>
                                             <action selector="shareMeme:" destination="BYZ-38-t0r" id="bjx-Vo-2ON"/>
                                         </connections>
@@ -82,8 +88,12 @@
                             <constraint firstItem="5IK-XD-QkV" firstAttribute="top" secondItem="y27-9z-x91" secondAttribute="bottom" constant="12" id="AVH-c5-8ZA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BLF-rO-xsN" secondAttribute="trailing" constant="75" id="DTs-rA-fvC"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5IK-XD-QkV" secondAttribute="bottom" id="KYw-NY-IBR"/>
+                            <constraint firstItem="faA-c0-etJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="MAW-Gu-Hly"/>
                             <constraint firstItem="BLF-rO-xsN" firstAttribute="trailing" secondItem="y27-9z-x91" secondAttribute="trailing" id="Txk-Rw-rTI"/>
+                            <constraint firstItem="faA-c0-etJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="aOP-eA-UCJ"/>
                             <constraint firstItem="BLF-rO-xsN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="boc-Md-tI0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="faA-c0-etJ" secondAttribute="trailing" constant="-20" id="cwt-nf-xOA"/>
+                            <constraint firstItem="BLF-rO-xsN" firstAttribute="top" secondItem="faA-c0-etJ" secondAttribute="bottom" constant="15" id="g17-pk-Lxp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5IK-XD-QkV" secondAttribute="trailing" constant="-20" id="h5F-98-zg3"/>
                             <constraint firstItem="BLF-rO-xsN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="39" id="muh-4s-XRX"/>
                             <constraint firstItem="fSA-eN-rMC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rVe-rh-Lbm"/>

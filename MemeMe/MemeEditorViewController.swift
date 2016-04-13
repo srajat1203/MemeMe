@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController
 //  MemeMe
 //
 //  Created by Rajat Sharma on 4/8/16.
@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var imagePickerView: UIImageView!
     
@@ -33,6 +35,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
+    
+  // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
-        self.subscribeToKeyboardNotifications()
+        subscribeToKeyboardNotifications()
         
         if((imagePickerView.image == nil)){
             
@@ -88,25 +92,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
-        self.unsubscribeFromKeyboardNotifications()
-    }
-
-    @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-   //print("here")
+        unsubscribeFromKeyboardNotifications()
     }
     
-    @IBAction func pickAnImageFromCamera(sender: AnyObject) {
-        
+    //MARK: - IBAction Functions
+    
+    @IBAction func pickAnImage(sender: AnyObject) {
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
         imagePicker.delegate = self
+        if(sender.tag == 1){
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        }
+        else if(sender.tag == 2){
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+        }
         self.presentViewController(imagePicker, animated: true, completion: nil)
+        
     }
+
     
     @IBAction func cancelMeme(sender: AnyObject) {
         
@@ -125,25 +128,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         controller.completionWithItemsHandler = {
             (activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
             
-            self.save()
+            if(completed){
+             self.save()
+            }
             
             controller.dismissViewControllerAnimated(true, completion: nil)
             
         }
         
     }
-    //IMAGE PICKER DELEGATE FUNCTIONS
+    
+    
+    //MARK: - IMAGE PICKER DELEGATE FUNCTIONS
     
     func imagePickerController(picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : AnyObject]){
         
-        //print("here2")
+   
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
                 
                 imagePickerView.image = image
-                imagePickerView.contentMode = UIViewContentMode.ScaleAspectFill
+                imagePickerView.contentMode = UIViewContentMode.ScaleAspectFit
                 
-                self.dismissViewControllerAnimated(true, completion:nil)
+                dismissViewControllerAnimated(true, completion:nil)
         }
         
     }
@@ -153,12 +160,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
     
         
-        self.dismissViewControllerAnimated(true, completion:nil)
+        dismissViewControllerAnimated(true, completion:nil)
 
         
     }
     
-    //TEXTFIELD DELETAGE FUNCTIONS
+    //MARK: - TEXTFIELD DELETAGE FUNCTIONS
     
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -173,28 +180,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        //self.view.frame.origin.y += getKeyboardHeight
+        
         return textField.resignFirstResponder()
     }
     
     
-    //KEYBOARD FUNCTIONS
+    //// MARK: - Keyboard Functions
     
     
     func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         
     }
     
     func keyboardWillShow(notification: NSNotification){
-        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        if(bottomText.isFirstResponder()){
+            self.view.frame.origin.y -= getKeyboardHeight(notification)
+        }
     }
     
     func keyboardWillHide(notification: NSNotification){
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        
+        if(bottomText.isFirstResponder()){
+            self.view.frame.origin.y += getKeyboardHeight(notification)
+        }
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
