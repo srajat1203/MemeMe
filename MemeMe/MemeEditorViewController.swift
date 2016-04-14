@@ -51,11 +51,10 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             NSStrokeWidthAttributeName : -2.0
         ]
         
-        topText.delegate = self
-        bottomText.delegate = self
         
-        topText.text = "TOP"
-        bottomText.text = "BOTTOM"
+        setupTextField(topText, defaultText: "TOP")
+        setupTextField(bottomText, defaultText: "BOTTOM")
+    
         
         
         topText.defaultTextAttributes = memeTextAttributes
@@ -247,6 +246,15 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         bottomBar.hidden = false
         
         return memedImage
+    }
+    
+    //MARK - HELPER FUNCTION
+    func setupTextField(textField: UITextField, defaultText: String) {
+        
+        //Do formatting here
+        textField.delegate = self
+        textField.text = defaultText
+        //etc.
     }
 
 }
